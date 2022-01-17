@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -13,17 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        //get all tasks
+        return Task::latest()->get();
     }
 
     /**
@@ -34,7 +26,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store a coming task
+        $newTask = new Task;
+
+        $attributes = $request->validate([
+            'text' => 'required',
+            'day' => 'required',
+            'reminder' => 'required',
+        ]);
+        $newTask->create($attributes);
+
+        $newTask->text = $request->task["text"];
+        $newTask->day = $request->task["day"];
+        $newTask->reminder = $request->task["reminder"];
+        $newTask->reminder = $request->task["reminder"];
+        $newTask->save();
+
+        return $newTask;
+
     }
 
     /**
