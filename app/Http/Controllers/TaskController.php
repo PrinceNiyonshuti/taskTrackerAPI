@@ -29,19 +29,17 @@ class TaskController extends Controller
         //store a coming task
         $newTask = new Task;
 
-        $attributes = $request->validate([
-            'text' => 'required',
-            'day' => 'required',
-            'reminder' => 'required',
-        ]);
-        $newTask->create($attributes);
+        // $attributes = $request->validate([
+        //     'text' => 'required',
+        //     'day' => 'required',
+        //     'reminder' => 'required',
+        // ]);
+        // $newTask->create($attributes);
 
         $newTask->text = $request->task["text"];
         $newTask->day = $request->task["day"];
         $newTask->reminder = $request->task["reminder"];
-        $newTask->reminder = $request->task["reminder"];
         $newTask->save();
-
         return $newTask;
 
     }
@@ -55,6 +53,7 @@ class TaskController extends Controller
     public function show($id)
     {
         //
+        return Task::find($id);
     }
 
     /**
@@ -66,6 +65,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -77,7 +77,17 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //update task
+        $existingTask =  Task::find($id);
+        if($existingTask){
+            $existingTask->text = $request->task["text"];
+            $existingTask->day = $request->task["day"];
+            $existingTask->reminder = $request->task["reminder"];
+            $existingTask->save();
+            return $existingTask;
+        }
+
+        return "No Task Found";
     }
 
     /**
@@ -88,6 +98,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //delete task
+        $existingTask =  Task::find($id);
+        if($existingTask){
+            $existingTask->delete();
+            return "Task Deleted Successfully";
+        }
+
+        return "No Task Found";
     }
 }

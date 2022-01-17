@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/tasks',[TaskController::class,'index']);
+Route::get('/tasks/{id}',[TaskController::class,'show']);
 Route::prefix('/tasks')->group(function(){
     Route::post('/store',[TaskController::class,'store']);
     Route::put('/{id}',[TaskController::class,'update']);
