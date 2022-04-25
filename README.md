@@ -1,6 +1,6 @@
 ## About Task Tracker API
 
-
+simple task REST API , to be used for learning purpose
 
 ## Documentation
 
